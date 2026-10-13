@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Construction Takes Talent &mdash; We have work. We need talent.</title>
+<meta name="description" content="We have work. We need talent. Confidential recruiting for superintendents, project managers, engineers, estimators and VDC staff at general contractors.">
+<!-- Browser-tab icon: the CTT mark, inlined so there is no extra file to host. -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23C2603B' d='M48.06 9.06A28 28 0 1 0 48.06 54.94L45.96 51.93A23.5 23.5 0 1 1 45.96 12.07Z'/%3E%3Cg transform='translate(-1.5 0)' fill='%234A3426'%3E%3Cpath d='M33.5 19V24H28V45H23V24C21.2 24 19.3 24.8 17.6 26.4C17.8 21.8 20.2 19 24 19Z'/%3E%3Cpath d='M35.5 27H50.5V28.6L45.5 31.8V42.5L43 46.5L40.5 42.5V31.8L35.5 28.6Z'/%3E%3C/g%3E%3C/svg%3E">
+<!-- Confidentiality: never tell the next site where a candidate came from. -->
+<meta name="referrer" content="no-referrer">
+
+<!-- ================================================================
+     SWAP POINT — THE TEAM INBOX
+     ----------------------------------------------------------------
+     TEMPORARY: andre@constructiontakestalent.com is used only while the
+     site is being built. Every message should reach the whole recruiting
+     / HR team, so create ONE shared address on the domain (a shared
+     mailbox or group that delivers to everyone on the team), then
+     find-and-replace
+
+         andre@constructiontakestalent.com
+
+     across this file. It appears 5 times (contact block x3, footer x2).
+     Nothing in the script needs editing.
+
+     Before going live, on that shared inbox:
+       1. Turn on an automatic reply. The page promises an immediate
+          automatic confirmation.
+       2. Make sure it is NOT forwarded into JazzHR or any other system.
+          The page promises "an email to us isn't an application — no
+          record". If mail is piped into the ATS, that line becomes false
+          and must come out.
+     ================================================================ -->
+
+<style>
+  /* ============================================================
+     TOKENS
+     ------------------------------------------------------------
+     EARTH. Warm oat ground, coffee-dark type, rust and brown.
+       RUST       #c2603b — graphic only (rules, underlines). ~3:1,
+                  too weak for text.
+       DEEP RUST  #9a3b26 — accent text: the one highlighted word,
+                  links, small accents. ~5.8:1.
+       BROWN      #4a3426 — the solid fills: primary buttons. Cream
+                  text on it is ~11:1.
+       Soil tints (--bg-deep / --band-warm) carry the "comfy" warmth
+       on the raised panels and the closing band.
+     If it's a letterform, deep rust; a line, rust; a fill, brown.
+
+     Type stays on system faces on purpose. A hosted webfont means every
+     visit pings a font CDN, and this page's promise is that no third
+     party sees who is reading it.
+     ============================================================ */
+  :root {
+    --display: "Segoe UI Variable Display", "Segoe UI", -apple-system,
+               "Helvetica Neue", "Helvetica", Arial, sans-serif;
+    --body:    "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system,
+               Helvetica, Arial, sans-serif;
+
+    --measure: 62ch;
+    --gutter: clamp(1.25rem, 5vw, 4.5rem);
+    --shell: 1240px;
+  }
+
+  /* Committed palette — pinned so a host page's data-theme can't
+     half-invert it. */
+  :root,
+  :root[data-theme="dark"],
+  :root[data-theme="light"] {
+    --bg:         #f1ece4 !important;   /* warm oat */
+    --bg-lift:    #f8f4ee !important;   /* raised panels */
+    --bg-deep:    #e7ddd0 !important;   /* soil tint */
+    --band-warm:  #ebe1d4 !important;   /* closing / how-we-work bands */
+    --fg:         #2a211b !important;   /* coffee */
+    --fg-soft:    rgba(42, 33, 27, 0.78) !important;   /* ~6:1 */
+    --fg-faint:   rgba(42, 33, 27, 0.68) !important;   /* ~4.7:1 — passes AA */
+    --accent:     #c2603b !important;   /* rust — graphic only */
+    --accent-ink: #9a3b26 !important;   /* deep rust — accent text */
+    --brown:      #4a3426 !important;   /* solid fills */
+    --hairline:   rgba(74, 52, 38, 0.18) !important;
+    --rule:       rgba(74, 52, 38, 0.09) !important;
+  }
+
+  html, body { background: #f1ece4 !important; color-scheme: only light; margin: 0; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scrollbar-color: rgba(74,52,38,.4) var(--bg); }
+  ::selection { background: #9a3b26; color: #f8f4ee; }
+
+  body {
+    position: relative;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.62;
+    overflow-x: hidden;
+    caret-color: var(--accent-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent-ink); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; }
+
+  .vh {
+    position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    opacity: 0.05; background-repeat: repeat; mix-blend-mode: multiply;
+  }
+
+  /* ============================================================
+     THE DRAFTING GRID — three hairlines at 25 / 50 / 75%.
+     ============================================================ */
+  .shell {
+    position: relative;
+    width: 100%;
+    max-width: var(--shell);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .shell::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(var(--rule), var(--rule)),
+      linear-gradient(var(--rule), var(--rule)),
+      linear-gradient(var(--rule), var(--rule));
+    background-size: 1px 100%;
+    background-position: 25% 0, 50% 0, 75% 0;
+    background-repeat: no-repeat;
+  }
+  .shell > * { position: relative; z-index: 1; }
+  .no-rules::before { display: none; }
+  @media (max-width: 760px) {
+    .shell::before { background-position: 33.333% 0, 66.666% 0, -99px 0; }
+  }
+
+  /* ============================================================
+     TYPE
+     ============================================================ */
+  .display {
+    font-family: var(--display);
+    font-weight: 300;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  h2.display { font-size: clamp(2rem, 4.4vw, 3.1rem); }
+  h3.display { font-size: clamp(1.3rem, 2vw, 1.6rem); letter-spacing: -0.012em; }
+  .hl { color: var(--accent-ink); }
+
+  .lede {
+    max-width: var(--measure);
+    font-size: clamp(1.04rem, 1.35vw, 1.16rem);
+    color: var(--fg-soft);
+  }
+
+  /* tape-measure rule — graphic, so the rust */
+  .tick-rule {
+    height: 11px;
+    border-top: 1px solid rgba(194, 96, 59, 0.5);
+    background-image:
+      linear-gradient(rgba(194,96,59,.5), rgba(194,96,59,.5)),
+      repeating-linear-gradient(to right, rgba(194,96,59,.5) 0 1px, transparent 1px 11px);
+    background-size: 1px 5px, 100% 5px;
+    background-position: top right, top left;
+    background-repeat: no-repeat, no-repeat;
+  }
+
+  /* drawn arrow / copy icons — one stroke weight everywhere */
+  .ico { width: 0.95em; height: 0.95em; flex: none; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: square; }
+  .ico-down { transform: rotate(90deg); }
+
+  /* ============================================================
+     BUTTONS — square corners; nothing on this page has a radius.
+     ============================================================ */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    min-height: 48px;
+    font-family: var(--body); font-size: 0.85rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.85rem 1.4rem;
+    border: 1px solid var(--brown); border-radius: 0;
+    background: var(--brown); color: var(--bg-lift);
+    text-decoration: none; cursor: pointer;
+    transition: background .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .btn:hover { background: var(--accent-ink); border-color: var(--accent-ink); color: var(--bg-lift); }
+  .btn-ghost { background: transparent; color: var(--brown); border-color: rgba(74,52,38,.45); }
+  .btn-ghost:hover { background: transparent; color: var(--accent-ink); border-color: var(--accent-ink); }
+  .btn .ico { transition: transform .18s ease; }
+  .btn:hover .ico:not(.ico-down):not(.ico-copy) { transform: translateX(3px); }
+  .btn:hover .ico-down { transform: rotate(90deg) translateX(3px); }
+
+  /* ============================================================
+     MASTHEAD
+     ============================================================ */
+  .masthead { position: relative; z-index: 3; border-bottom: 1px solid var(--hairline); }
+  .masthead .shell {
+    display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 2rem);
+    padding-block: 1.2rem;
+  }
+  .lockup { margin-right: auto; display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: inherit; }
+  .lockup .mark { width: 52px; height: 52px; flex: none; }
+  .lockup .stack { display: flex; flex-direction: column; }
+  /* the descriptor: says plainly which side of the industry we recruit for */
+  .lockup .desc {
+    margin-top: 0.3rem;
+    font-size: 0.85rem; line-height: 1.2; letter-spacing: 0.01em;
+    color: var(--fg-soft);
+  }
+  @media (max-width: 420px) {
+    .lockup { gap: 0.6rem; }
+    .lockup .mark { width: 42px; height: 42px; }
+  }
+  .lockup .stack b {
+    font-family: var(--display); font-weight: 400;
+    font-size: 0.94rem; line-height: 1.14;
+    letter-spacing: 0.13em; text-transform: uppercase;
+  }
+  .lockup .stack b:last-of-type { letter-spacing: 0.155em; }
+  .lockup .tt { color: var(--accent-ink); }
+  .masthead nav { display: flex; gap: 1.5rem; }
+  .masthead nav a {
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.01em;
+    color: var(--fg-soft); text-decoration: none;
+    border-bottom: 1px solid transparent; padding-block: 0.6rem 0.35rem;
+  }
+  .masthead nav a:hover { color: var(--fg); border-bottom-color: var(--accent); }
+  /* on a phone, keep the one link that matters */
+  @media (max-width: 660px) {
+    .masthead nav a:not(.nav-talk) { display: none; }
+  }
+
+  /* ============================================================
+     HERO — the slogan reads as one stacked statement:
+         We have work.
+         We need talent.
+     Below it, two routes side by side: ready to move (roles) and
+     not looking (the confidential pitch, raised on its own panel).
+     On a phone the slogan grows to poster size and breaks into
+     four short lines — We have / work. / We need / talent.
+     ============================================================ */
+  .hero { padding-block: clamp(3rem, 8vw, 6rem) clamp(3.5rem, 7vw, 5.5rem); }
+  .opener {
+    font-family: var(--display); font-weight: 300;
+    font-size: clamp(1.25rem, 2.3vw, 1.7rem); line-height: 1.25; letter-spacing: -0.01em;
+    color: var(--fg-soft); margin: 0 0 1.25rem; max-width: 30ch;
+  }
+  .opener span { color: var(--fg); }
+  .hero .tick-rule { max-width: 260px; margin-bottom: clamp(2.25rem, 5vw, 3.5rem); }
+
+  .slogan {
+    margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+    font-family: var(--display); font-weight: 300;
+    font-size: clamp(3rem, 8.4vw, 6rem);
+    line-height: 0.96; letter-spacing: -0.03em;
+  }
+  .slogan .line { display: block; }
+
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(2rem, 6vw, 5rem);
+    row-gap: 2.5rem;
+    align-items: stretch;
+  }
+  .half {
+    display: flex; flex-direction: column; align-items: flex-start;
+    border-top: 1px solid var(--hairline); padding-top: 1.5rem;
+  }
+  /* the confidential route gets its own raised panel so it reads
+     as the page's second front door, not a footnote */
+  .half-b {
+    border: 1px solid var(--hairline);
+    background: var(--bg-lift);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+  .half p { margin: 0 0 1.25rem; max-width: 46ch; color: var(--fg-soft); }
+  .half .sub {
+    font-family: var(--display); font-weight: 400;
+    font-size: clamp(1.3rem, 2vw, 1.6rem); line-height: 1.2; letter-spacing: -0.012em;
+    margin: 0 0 0.85rem; color: var(--fg);
+  }
+  .half .cta-row { margin-top: auto; padding-top: 0.5rem; }
+  .half .after { margin: 1.1rem 0 0; font-size: 0.85rem; color: var(--fg-faint); }
+
+  .disciplines { list-style: none; margin: 0 0 1.5rem; padding: 0; width: 100%; max-width: 46ch; }
+  .disciplines li {
+    padding: 0.7rem 0; border-top: 1px solid var(--hairline);
+    font-size: 1.0625rem; color: var(--fg-soft); line-height: 1.45;
+  }
+  .disciplines li:last-child { border-bottom: 1px solid var(--hairline); }
+  .disciplines b { display: block; color: var(--fg); font-weight: 600; }
+
+  @media (max-width: 760px) {
+    /* poster scale: "We have / work. / We need / talent." */
+    .slogan { font-size: 21vw; font-weight: 400; line-height: 0.92; letter-spacing: -0.035em; }
+    .split { grid-template-columns: minmax(0, 1fr); }
+    .hero { padding-top: 2.25rem; }
+    .opener { font-size: 1.2rem; }
+    .hero .tick-rule { margin-bottom: 1.75rem; }
+  }
+  /* thumb-sized, full-width buttons on a phone */
+  @media (max-width: 560px) {
+    .btn { width: 100%; justify-content: space-between; }
+  }
+
+  /* ============================================================
+     BANDS
+     ============================================================ */
+  .band { padding-block: clamp(3.5rem, 8vw, 6.5rem); border-top: 1px solid var(--hairline); }
+  .band-lift { background: var(--band-warm); }
+  .band-head { margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .band-head h2 { max-width: 20ch; margin-bottom: 1rem; }
+  .band-head .lede { margin: 0; }
+
+  /* ---- open roles (hidden until a real feed has entries) ---- */
+  .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.75rem; }
+  .chip {
+    min-height: 44px;
+    font-family: var(--body); font-size: 0.85rem; font-weight: 600;
+    padding: 0.55rem 1.1rem; border: 1px solid var(--hairline); border-radius: 0;
+    background: transparent; color: var(--fg-soft); cursor: pointer;
+    transition: border-color .16s ease, color .16s ease, background .16s ease;
+  }
+  .chip:hover { border-color: var(--fg-soft); color: var(--fg); }
+  .chip[aria-pressed="true"] { background: var(--brown); border-color: var(--brown); color: var(--bg-lift); }
+
+  .jobs {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px; background: var(--hairline); border: 1px solid var(--hairline);
+  }
+  .job {
+    display: flex; flex-direction: column; gap: 0.45rem;
+    padding: 1.5rem 1.4rem 1.3rem;
+    background: var(--bg);
+    text-decoration: none; color: inherit;
+    transition: background .18s ease;
+  }
+  .job:hover { background: var(--bg-lift); }
+  .job .tag {
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em; color: var(--accent-ink);
+  }
+  .job h3 {
+    font-family: var(--display); font-weight: 400; font-size: 1.25rem;
+    letter-spacing: -0.012em; line-height: 1.2; margin: 0;
+  }
+  .job .meta { font-size: 0.85rem; color: var(--fg-faint); margin: 0; }
+  .job .go {
+    margin-top: 0.7rem; display: flex; align-items: center; gap: 0.45rem;
+    font-size: 0.85rem; font-weight: 600; color: var(--fg-soft);
+  }
+  .job:hover .go { color: var(--accent-ink); }
+  .job .go .ico { transition: transform .18s ease; }
+  .job:hover .go .ico { transform: translateX(3px); }
+
+  /* ---- how we work ---- */
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.75rem, 3.5vw, 3rem); }
+  .col { border-top: 1px solid var(--hairline); padding-top: 1.25rem; }
+  .col h3 { margin: 0 0 0.65rem; }
+  .col p { margin: 0; color: var(--fg-soft); font-size: 1.0625rem; }
+  @media (max-width: 820px) { .cols { grid-template-columns: 1fr; } }
+
+  /* ---- this stays between us ---- */
+  .talk-grid {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 5rem); align-items: start;
+  }
+  @media (max-width: 900px) { .talk-grid { grid-template-columns: minmax(0, 1fr); } }
+  .talk-grid h2 { margin-bottom: 1.1rem; }
+  .talk-grid .lede { margin: 0 0 2rem; }
+
+  .promises { margin: 0; }
+  .promises div { padding: 1.1rem 0; border-top: 1px solid var(--hairline); }
+  .promises div:last-child { border-bottom: 1px solid var(--hairline); }
+  .promises dt {
+    font-family: var(--display); font-weight: 400; font-size: 1.2rem;
+    line-height: 1.25; letter-spacing: -0.01em; color: var(--fg);
+  }
+  .promises dd { margin: 0.35rem 0 0; color: var(--fg-soft); font-size: 1.0625rem; max-width: 50ch; }
+
+  .contact {
+    background: var(--bg-lift); border: 1px solid var(--hairline);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+  .contact h3 { margin: 0 0 1rem; }
+  .addr {
+    margin: 0 0 1.25rem;
+    font-family: var(--display); font-weight: 300;
+    font-size: clamp(1.15rem, 2.1vw, 1.55rem); letter-spacing: -0.01em; line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+  .addr a { color: var(--fg); text-decoration-color: var(--accent); }
+  .addr a:hover { color: var(--accent-ink); }
+  .contact-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .copy-status { min-height: 1.5em; margin: 0.6rem 0 0; font-size: 0.85rem; color: var(--accent-ink); }
+
+  .advice {
+    margin: 1.25rem 0 0; padding: 1.1rem 1.2rem;
+    background: var(--bg-deep);
+    font-size: 1.0625rem; color: var(--fg-soft);
+  }
+  .advice strong { display: block; color: var(--fg); font-weight: 600; margin-bottom: 0.25rem; }
+  .advice p { margin: 0; }
+
+  .next { margin-top: 1.5rem; display: grid; gap: 1.1rem; }
+  .next h4 { margin: 0 0 0.2rem; font-size: 1.0625rem; font-weight: 600; color: var(--fg); }
+  .next p { margin: 0; font-size: 1.0625rem; color: var(--fg-soft); }
+
+  /* ---- closing ---- */
+  .closing h2.display { font-size: clamp(3rem, 13vw, 5.5rem); line-height: 1; letter-spacing: -0.026em; margin-bottom: 1.4rem; }
+  .closing .lede { margin: 0 0 2rem; }
+
+  /* ---- footer ---- */
+  footer.ctt-foot { border-top: 1px solid var(--hairline); padding-block: 2.25rem; }
+  footer.ctt-foot .shell {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: 0.75rem 1.5rem; font-size: 0.85rem; color: var(--fg-faint);
+  }
+  footer.ctt-foot .name { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 600; color: var(--fg-soft); }
+  footer.ctt-foot .foot-mark { width: 28px; height: 28px; flex: none; }
+  footer.ctt-foot .tt { color: var(--accent-ink); }
+  footer.ctt-foot a { color: var(--fg-soft); }
+  footer.ctt-foot a:hover { color: var(--fg); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+  <div class="grain" id="grain" aria-hidden="true"></div>
+
+  <!-- ========== MASTHEAD ========== -->
+  <header class="masthead">
+    <div class="shell no-rules">
+      <a class="lockup" href="#top" aria-label="Construction Takes Talent, general contractor recruiting — top of page">
+        <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><path fill="#C2603B" d="M48.06 9.06A28 28 0 1 0 48.06 54.94L45.96 51.93A23.5 23.5 0 1 1 45.96 12.07Z"/><g transform="translate(-1.5 0)" fill="#4A3426"><path d="M33.5 19V24H28V45H23V24C21.2 24 19.3 24.8 17.6 26.4C17.8 21.8 20.2 19 24 19Z"/><path d="M35.5 27H50.5V28.6L45.5 31.8V42.5L43 46.5L40.5 42.5V31.8L35.5 28.6Z"/></g></svg>
+        <span class="stack">
+          <b>Construction</b>
+          <b><span class="tt">T</span>akes <span class="tt">T</span>alent</b>
+          <span class="desc">General contractor recruiting</span>
+        </span>
+      </a>
+      <nav aria-label="Sections">
+        <a href="#openings" id="nav-roles" hidden>Open roles</a>
+        <a href="#how">How we work</a>
+        <a href="#talk" class="nav-talk">Talk to us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+      <div class="shell">
+        <p class="opener">Talent builds the world. <span>We find those people.</span></p>
+        <div class="tick-rule" aria-hidden="true"></div>
+
+        <h1 class="slogan">
+          <span class="line">We have work.</span>
+          <span class="line">We need <span class="hl">talent</span>.</span>
+        </h1>
+
+        <div class="split">
+          <!-- route 1 — for the reader who is ready to move -->
+          <div class="half half-a">
+            <h2 class="sub">Ready to move?</h2>
+            <p>
+              Real roles general contractors have handed us to fill, not ads
+              posted to collect resumes. We read the scope before the resume.
+            </p>
+            <ul class="disciplines">
+              <li><b>Field operations</b>Superintendents, assistant supers, field engineers, safety</li>
+              <li><b>Project management &amp; engineering</b>Project engineers, APMs, project managers, project executives</li>
+              <li><b>Estimating &amp; preconstruction</b>Estimators, precon managers, purchasing</li>
+              <li><b>VDC &amp; 3D</b>VDC and BIM managers, coordinators, modelers</li>
+            </ul>
+            <div class="cta-row">
+              <!-- Points at the confidential route until real roles load,
+                   then the script switches it to "See open roles". -->
+              <a class="btn btn-ghost" id="cta-work" href="#talk">
+                <span id="cta-work-label">Tell us what you run</span>
+                <svg class="ico" id="cta-work-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8h10M8.5 4l4 4-4 4"/></svg>
+              </a>
+            </div>
+            <p class="after">Candidates never pay us, in any case.</p>
+          </div>
+
+          <!-- route 2 — for the reader who isn't looking -->
+          <div class="half half-b">
+            <h2 class="sub">Not actively looking? Talk anyway.</h2>
+            <p>
+              The best people we place were never on the market. If you&rsquo;re doing fine
+              where you are, that&rsquo;s the right time to find out what else is out there
+              &mdash; because you can say no from a position of strength.
+            </p>
+            <div class="cta-row">
+              <a class="btn" href="#talk">
+                Write to us confidentially
+                <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8h10M8.5 4l4 4-4 4"/></svg>
+              </a>
+            </div>
+            <p class="after">If you&rsquo;re here from a message we sent, you&rsquo;re in the right place.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== OPEN ROLES ==========
+         Hidden by default. It appears only when openings.json (later fed
+         by JazzHR) has real entries. No seeded roles, no counts, no dates:
+         an empty list is simply absent, never "check back soon". -->
+    <section class="band" id="openings" aria-labelledby="openings-h" hidden>
+      <div class="shell">
+        <div class="band-head">
+          <h2 class="display" id="openings-h">Open roles</h2>
+          <p class="lede">
+            Described by the work, never by the contractor. Our clients keep their
+            names private, the same way we keep yours. Applying opens our application
+            system, JazzHR, which keeps a record; use it when you&rsquo;re ready to be
+            considered. Rather talk first? <a href="#talk">Write to us</a>. That
+            stays off the record.
+          </p>
+        </div>
+        <div class="filters" id="filters" role="group" aria-label="Filter roles by discipline" hidden></div>
+        <div class="jobs" id="jobs"></div>
+      </div>
+    </section>
+
+    <!-- ========== HOW WE WORK ========== -->
+    <section class="band band-lift" id="how" aria-labelledby="how-h">
+      <div class="shell">
+        <div class="band-head">
+          <h2 class="display" id="how-h">What you get that a job board can&rsquo;t give you</h2>
+        </div>
+        <div class="cols">
+          <div class="col">
+            <h3 class="display">We read the scope, not the title.</h3>
+            <p>
+              &ldquo;Superintendent&rdquo; means something different on a tilt-up than it does
+              on a hospital. We ask what you actually built, who reported to you, and how
+              the job was delivered &mdash; then we match on that.
+            </p>
+          </div>
+          <div class="col">
+            <h3 class="display">Your name doesn&rsquo;t move without your say-so.</h3>
+            <p>
+              Nothing goes to a client until you&rsquo;ve seen the company, the project, and
+              the number and told us yes. No blind submittals, no surprise calls to your
+              current employer.
+            </p>
+          </div>
+          <div class="col">
+            <h3 class="display">Straight answers on comp and travel.</h3>
+            <p>
+              You&rsquo;ll know the range, the per diem, the vehicle allowance, and how many
+              nights away before you take an interview &mdash; not after you&rsquo;ve burned
+              a PTO day on one.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== THIS STAYS BETWEEN US ==========
+         No form on purpose. A form needs a backend or a form service, and
+         a form service is a third company holding every candidate's name
+         and resume. Email from the candidate's own personal account is the
+         only channel nobody else touches — and it carries the resume. -->
+    <section class="band" id="talk" aria-labelledby="talk-h">
+      <div class="shell talk-grid">
+        <div>
+          <h2 class="display" id="talk-h">This stays between us.</h2>
+          <p class="lede">
+            Talking to us costs you nothing and commits you to nothing. Here is exactly
+            what we promise, and the one part that&rsquo;s up to you.
+          </p>
+          <dl class="promises">
+            <div>
+              <dt>We never contact your current employer.</dt>
+              <dd>Your name doesn&rsquo;t leave our inbox without your yes, and your resume never goes anywhere you haven&rsquo;t approved by name.</dd>
+            </div>
+            <div>
+              <dt>An email to us isn&rsquo;t an application.</dt>
+              <dd>No applicant system, no record. Just a conversation with our recruiting team.</dd>
+            </div>
+            <div>
+              <dt>Candidates never pay us, in any case.</dt>
+              <dd>Only the contractors we recruit for do.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="contact">
+          <h3 class="display">Write to our recruiting team</h3>
+          <!-- SWAP POINT: team inbox (see the note at the top of the file) -->
+          <p class="addr"><a id="inbox" href="mailto:andre@constructiontakestalent.com?subject=Hello">andre@constructiontakestalent.com</a></p>
+          <div class="contact-actions">
+            <button class="btn" type="button" id="copy-addr">
+              <svg class="ico ico-copy" viewBox="0 0 16 16" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8"/><path d="M10.5 3V2.5h-8v8H3"/></svg>
+              Copy address
+            </button>
+            <a class="btn btn-ghost" href="mailto:andre@constructiontakestalent.com?subject=Hello">
+              Open email app
+              <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8h10M8.5 4l4 4-4 4"/></svg>
+            </a>
+          </div>
+          <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+
+          <div class="advice">
+            <p>
+              <strong>Write from a personal email, on a personal phone.</strong>
+              A message sent from a company account sits on company servers.
+              That&rsquo;s the one part we can&rsquo;t protect for you.
+            </p>
+          </div>
+
+          <div class="next">
+            <div>
+              <h4>What to send</h4>
+              <p>
+                A few lines on what you run: the kind of work, the size of the jobs,
+                how far you&rsquo;d travel. Attach a resume if it&rsquo;s handy; it isn&rsquo;t
+                needed to start. Any subject line works.
+              </p>
+            </div>
+            <div>
+              <h4>What happens next</h4>
+              <p>
+                You&rsquo;ll get an automatic confirmation right away. If your background fits
+                a role we&rsquo;re filling, we&rsquo;ll write back personally.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CLOSING ========== -->
+    <section class="band band-lift closing" aria-labelledby="close-h">
+      <div class="shell">
+        <h2 class="display" id="close-h">Someone built that.</h2>
+        <p class="lede">
+          Every building you passed on the way in had a superintendent, an engineer, an
+          estimator and a project manager behind it. If that&rsquo;s you, we&rsquo;d like to
+          hear what you&rsquo;ve built.
+        </p>
+        <a class="btn" href="#talk">
+          Write to us confidentially
+          <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8h10M8.5 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ctt-foot">
+    <div class="shell no-rules">
+      <span class="name">
+        <svg class="foot-mark" viewBox="0 0 64 64" aria-hidden="true"><path fill="#C2603B" d="M48.06 9.06A28 28 0 1 0 48.06 54.94L45.96 51.93A23.5 23.5 0 1 1 45.96 12.07Z"/><g transform="translate(-1.5 0)" fill="#4A3426"><path d="M33.5 19V24H28V45H23V24C21.2 24 19.3 24.8 17.6 26.4C17.8 21.8 20.2 19 24 19Z"/><path d="M35.5 27H50.5V28.6L45.5 31.8V42.5L43 46.5L40.5 42.5V31.8L35.5 28.6Z"/></g></svg>
+        <span>Construction <span class="tt">T</span>akes <span class="tt">T</span>alent &middot; General contractor recruiting</span>
+      </span>
+      <!-- SWAP POINT: team inbox -->
+      <a href="mailto:andre@constructiontakestalent.com?subject=Hello">andre@constructiontakestalent.com</a>
+      <span>Candidates never pay. Every conversation confidential.</span>
+    </div>
+  </footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     1. OPEN ROLES
+     ------------------------------------------------------------
+     Reads openings.json beside this file. Empty, missing or broken
+     means the section stays hidden — there is deliberately no
+     fallback list, because an invented role is worse than none.
+
+     When JazzHR is wired, fill openings.json from it (or point
+     OPENINGS_URL at a JSON export of the JazzHR jobs). Each record:
+       { "title": "Superintendent — Ground-Up",
+         "group": "Field operations",
+         "location": "Field-based · Regional",
+         "url": "https://<your-jazzhr-careers-page>/apply/..." }
+     Describe the work, never the contractor. No dates, no counts.
+     ============================================================ */
+  var OPENINGS_URL = "openings.json";
+  var GROUPS = [
+    "Field operations",
+    "Project management & engineering",
+    "Estimating & preconstruction",
+    "VDC & 3D"
+  ];
+
+  var section  = document.getElementById("openings");
+  var jobsEl   = document.getElementById("jobs");
+  var filters  = document.getElementById("filters");
+  var navRoles = document.getElementById("nav-roles");
+
+  var openings = [];
+  var active = "All";
+
+  function arrowSvg() {
+    var ns = "http://www.w3.org/2000/svg";
+    var s = document.createElementNS(ns, "svg");
+    s.setAttribute("class", "ico");
+    s.setAttribute("viewBox", "0 0 16 16");
+    s.setAttribute("aria-hidden", "true");
+    var p = document.createElementNS(ns, "path");
+    p.setAttribute("d", "M2.5 8h10M8.5 4l4 4-4 4");
+    s.appendChild(p);
+    return s;
+  }
+
+  function isUsable(j) {
+    return j && typeof j.title === "string" && j.title.trim() &&
+           typeof j.url === "string" && /^https:\/\//.test(j.url);
+  }
+
+  function renderJobs() {
+    jobsEl.textContent = "";
+    openings
+      .filter(function (j) { return active === "All" || j.group === active; })
+      .forEach(function (job) {
+        var a = document.createElement("a");
+        a.className = "job";
+        a.href = job.url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+
+        if (job.group) {
+          var tag = document.createElement("span");
+          tag.className = "tag";
+          tag.textContent = job.group;
+          a.appendChild(tag);
+        }
+
+        var h3 = document.createElement("h3");
+        h3.textContent = job.title;
+        a.appendChild(h3);
+
+        if (job.location) {
+          var meta = document.createElement("p");
+          meta.className = "meta";
+          meta.textContent = job.location;
+          a.appendChild(meta);
+        }
+
+        var go = document.createElement("span");
+        go.className = "go";
+        go.appendChild(document.createTextNode("View and apply"));
+        var vh = document.createElement("span");
+        vh.className = "vh";
+        vh.textContent = " (opens in a new tab)";
+        go.appendChild(vh);
+        go.appendChild(arrowSvg());
+        a.appendChild(go);
+
+        jobsEl.appendChild(a);
+      });
+  }
+
+  function renderFilters() {
+    var present = GROUPS.filter(function (g) {
+      return openings.some(function (j) { return j.group === g; });
+    });
+    if (present.length < 2) { return; }   // one discipline needs no filter
+    ["All"].concat(present).forEach(function (g) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.textContent = g === "All" ? "All roles" : g;
+      b.setAttribute("aria-pressed", String(g === active));
+      b.addEventListener("click", function () {
+        active = g;
+        Array.prototype.forEach.call(filters.children, function (c) {
+          c.setAttribute("aria-pressed", String(c === b));
+        });
+        renderJobs();
+      });
+      filters.appendChild(b);
+    });
+    filters.hidden = false;
+  }
+
+  function showRoles() {
+    section.hidden = false;
+    navRoles.hidden = false;
+    // The "We have work." half now points at the real roles.
+    var cta = document.getElementById("cta-work");
+    cta.href = "#openings";
+    cta.className = "btn";
+    document.getElementById("cta-work-label").textContent = "See open roles";
+    document.getElementById("cta-work-ico").classList.add("ico-down");
+    renderFilters();
+    renderJobs();
+  }
+
+  if (window.fetch) {
+    fetch(OPENINGS_URL, { cache: "no-cache" })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (data) {
+        openings = Array.isArray(data) ? data.filter(isUsable) : [];
+        if (openings.length) { showRoles(); }
+      })
+      .catch(function () { /* no feed yet: the section simply stays hidden */ });
+  }
+
+  /* ============================================================
+     2. COPY ADDRESS
+     The address is read from the page, so the inbox swap never
+     touches this script.
+     ============================================================ */
+  var copyBtn = document.getElementById("copy-addr");
+  var copyStatus = document.getElementById("copy-status");
+  var inbox = document.getElementById("inbox");
+
+  function copied() {
+    copyStatus.textContent = "Copied. Paste it into your personal email.";
+  }
+  function fallbackCopy() {
+    var range = document.createRange();
+    range.selectNodeContents(inbox);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    if (ok) { copied(); }
+    else { copyStatus.textContent = "Address selected. Copy it with your keyboard or long-press."; }
+  }
+
+  copyBtn.addEventListener("click", function () {
+    var text = inbox.textContent.trim();
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(copied, fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+  });
+
+  /* ============================================================
+     3. GRAIN — painted once, locally. No external request.
+     ============================================================ */
+  (function paintGrain() {
+    try {
+      var S = 128;
+      var c = document.createElement("canvas");
+      c.width = c.height = S;
+      var ctx = c.getContext("2d");
+      var img = ctx.createImageData(S, S);
+      var seed = 20260807;
+      function rnd() { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; }
+      for (var i = 0; i < img.data.length; i += 4) {
+        var v = 110 + rnd() * 145;
+        img.data[i] = v; img.data[i + 1] = v * 0.95; img.data[i + 2] = v * 0.88;   // warm, like sanded wood
+        img.data[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      document.getElementById("grain").style.backgroundImage = "url(" + c.toDataURL("image/png") + ")";
+    } catch (e) { /* decoration only */ }
+  })();
+})();
+</script>
+</body>
+</html>
